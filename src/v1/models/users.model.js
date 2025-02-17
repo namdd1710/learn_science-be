@@ -41,9 +41,9 @@ const UsersModel = new Schema(
       type: [String],
       required: true
     },
-    restaurantId: { 
+    gradeId: { 
       type: mongoose.Schema.Types.ObjectId, 
-      ref: 'restaurants'
+      ref: 'grades',
     },
     createdAt: { 
       type: Date, 

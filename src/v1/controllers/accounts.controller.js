@@ -3,12 +3,12 @@ import UsersModel from "../models/users.model.js";
 import { errorResponse, successResponse } from "../utils/response.js";
 
 export const RegisterNewUser = async (req, res) => {
-  const { name, email, phone, password, roles, restaurantId, address } =
+  const { name, email, phone, password, roles,userName, address } =
     req.body;
 
   try {
     const existingUser = await UsersModel.findOne({
-      $or: [{ email }, { phone }],
+      $or: [{ email }, { phone }, { userName }],
     });
 
     if (existingUser) {
