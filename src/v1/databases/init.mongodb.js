@@ -1,4 +1,7 @@
 import mongoose, { connect, set } from "mongoose";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 //connect mongoose
 connect(process.env.MONGO_URI)

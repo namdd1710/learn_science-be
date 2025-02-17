@@ -1,5 +1,5 @@
 {
-  "name": "takeout-food-be",
+  "name": "learn-science-be",
   "type": "module",
   "version": "1.0.0",
   "description": "To make it easy for you to get started with GitLab, here's a list of recommended next steps.",
@@ -8,7 +8,7 @@
     "node": "20.x"
   },
   "scripts": {
-    "dev": "nodemon --inspect server.js",
+    "dev": "nodemon server.js --exec babel-node -e js",
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write ."
@@ -18,6 +18,7 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
+    "compression": "^1.7.4",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
@@ -27,7 +28,6 @@
     "mongoose": "^8.2.3",
     "morgan": "^1.10.0",
     "nodemon": "^3.1.0",
-    "compression": "^1.7.4",
     "redis": "^3.1.2",
     "winston": "^3.7.2"
   },
@@ -36,6 +36,7 @@
     "prettier": "^3.2.5"
   },
   "_moduleAliases": {
+    "~":"src/v1",
     "~/root": ".",
     "~/routes": "src/v1/routes",
     "~/models": "src/v1/models",
