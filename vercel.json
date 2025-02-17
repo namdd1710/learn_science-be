@@ -19,10 +19,5 @@
       "src": "/(.*)",
       "dest": "src/app.js"
     }
-  ],
-  "functions": {
-    "api/*.js": {
-      "runtime": "edge"
-    }
-  }
+  ]
 }
