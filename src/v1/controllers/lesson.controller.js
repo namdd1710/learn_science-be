@@ -1,3 +1,5 @@
 
 
-export const AddNewLesson = async (req, res) => {}
+export const AddNewLesson = async (req, res) => {
+  const {title} = req.body;
+}

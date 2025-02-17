@@ -1,4 +1,5 @@
-import RecordInfoSchema from "./recordInfo.model";
+import mongoose, { Schema } from "mongoose";
+import RecordInfoSchema from "./recordInfo.model.js";
 
 const GradeModel = new Schema(
   {

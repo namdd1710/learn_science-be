@@ -1,4 +1,5 @@
 import { Schema } from "mongoose";
+import ForeignKeySchema from "./foreign-key.model.js";
 
 const RecordInfoSchema = new Schema({
   createdAt: { type: Date, default: Date.now },

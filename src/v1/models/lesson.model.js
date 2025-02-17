@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
-import ForeignKeySchema from "./foreign-key.model";
-import RecordInfoSchema from "./recordInfo.model";
+import ForeignKeySchema from "./foreign-key.model.js";
+import RecordInfoSchema from "./recordInfo.model.js";
 
 const LessonsModel = new Schema(
   {
@@ -11,7 +11,7 @@ const LessonsModel = new Schema(
     },
     imageUrl: {
       type: String,
-      required: true,
+      // required: true,
     },
     status: {
       type: Number,

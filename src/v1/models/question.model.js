@@ -1,6 +1,6 @@
 import { Schema } from "mongoose";
-import ForeignKeySchema from "./foreign-key.model";
-import RecordInfoSchema from "./recordInfo.model";
+import ForeignKeySchema from "./foreign-key.model.js";
+import RecordInfoSchema from "./recordInfo.model.js";
 
 // QuestionTemplate schema
 const QuestionTemplateSchema = new Schema({

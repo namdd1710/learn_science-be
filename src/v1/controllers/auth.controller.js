@@ -5,10 +5,10 @@ import UsersModel from "../models/users.model.js";
 import { errorResponse, successResponse } from "../utils/response.js";
 
 export const Login = async (req, res) => {
-  const { username, password } = req.body;
+  const { userName, password } = req.body;
 
   try {
-    const user = await UsersModel.findOne({ email: username });
+    const user = await UsersModel.findOne({ userName: userName });
 
     if (!user) {
       return res
