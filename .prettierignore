@@ -1,0 +1,7 @@
+.vercel
+.prettierignore
+.eslintrc.json
+.gitlab-ci.yml
+README.md
+*.css
+next-env.d
