@@ -19,15 +19,15 @@ const LessonsModel = new Schema(
     },
     grade: {
       type: ForeignKeySchema,
-      required: true,
+      // required: true,
     },
     unit: {
       type: ForeignKeySchema,
-      required: true,
+      // required: true,
     },
     recordInfo: {
      type: RecordInfoSchema,
-     required: true
+    //  required: true
     },
   },
   { timestamps: true }

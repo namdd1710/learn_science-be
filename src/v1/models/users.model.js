@@ -7,31 +7,31 @@ const UsersModel = new Schema(
   {
     fullName: {
       type: String,
-      required: true
+      // required: true
     },
     userName: {
       type: String,
-      required: true
+      // required: true
     },
     email: {
       type: String,
-      required: true
+      // required: true
     },
     phone: {
       type: String,
-      required: true
+      // required: true
     },
     image: {
       type: String,
-      required: true
+      // required: true
     },
     address: {
       type: String,
-      required: true
+      // required: true
     },
     password: {
       type: String,
-      required: true
+      // required: true
     },
     status: { 
       type: Number, 
@@ -39,7 +39,7 @@ const UsersModel = new Schema(
     },
     roles: { 
       type: [String],
-      required: true
+      // required: true
     },
     gradeId: { 
       type: mongoose.Schema.Types.ObjectId, 

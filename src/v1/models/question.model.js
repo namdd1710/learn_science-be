@@ -38,16 +38,17 @@ const QuestionExplanationSchema = new Schema({
 
 const QuestionModel = new Schema(
   {
-    status: { type: Number, required: true },
-    type: { type: Number, required: true },
-    template: { type: QuestionTemplateSchema, required: true },
-    prompt: { type: QuestionPromptSchema, required: true },
-    question: { type: QuestionQuestionSchema, required: true },
-    explanation: { type: QuestionExplanationSchema, required: true },
+    status: { type: Number },
+    type: { type: Number },
+    template: { type: QuestionTemplateSchema },
+    prompt: { type: QuestionPromptSchema },
+    question: { type: QuestionQuestionSchema },
+    explanation: { type: QuestionExplanationSchema },
     lessons: [ForeignKeySchema],
     units: [ForeignKeySchema],
+    grades: [ForeignKeySchema],
     tags: [String],
-    recordInfo: { type: RecordInfoSchema, required: true },
+    recordInfo: { type: RecordInfoSchema },
   },
   { timestamps: true }
 );

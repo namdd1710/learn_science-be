@@ -23,6 +23,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-jwt": "^8.4.1",
+    "express-validator": "^7.2.1",
     "jsonwebtoken": "^9.0.2",
     "module-alias": "^2.2.3",
     "mongoose": "^8.2.3",
@@ -36,7 +37,7 @@
     "prettier": "^3.2.5"
   },
   "_moduleAliases": {
-    "~":"src/v1",
+    "~": "src/v1",
     "~/root": ".",
     "~/routes": "src/v1/routes",
     "~/models": "src/v1/models",

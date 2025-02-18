@@ -1,3 +1,4 @@
+import { _apiCode } from "../errors/errors.js";
 import CategoriesModel from "../models/categories.model.js";
 import { calculatePageCount, errorResponse, successPaginationResponse, successResponse } from "../utils/response.js";
 
@@ -7,12 +8,12 @@ export const AddNewCategory = async (req, res) => {
   try {
     const existingCategory = await findCategoryByName(name,restaurantId);
     if (existingCategory) {
-      return res.status(400).json(errorResponse(400, "Category already exists", null));
+      return res.status(_apiCode.ERR_DEFAULT).json(errorResponse(_apiCode.ERR_DEFAULT, "Category already exists", null));
     }
     const newCategory = await CategoriesModel.create(req.body);
-    res.status(201).json(successResponse(newCategory._id));
+    res.status(_apiCode.SUCCESS).json(successResponse(newCategory._id));
   } catch (error) {
-    res.status(500).json(errorResponse(500, error.message, null));
+    res.status(_apiCode.ERR_DEFAULT).json(errorResponse(_apiCode.ERR_DEFAULT, error.message, null));
   }
 };
 
@@ -64,9 +65,9 @@ export const AdminGetAllCategories = async (req, res) => {
 
     // Trả về phản hồi có thông tin phân trang
     const response = successPaginationResponse(categories, recordCount, page, size, pageCount);
-    res.status(200).json(response); 
+    res.status(_apiCode.SUCCESS).json(response); 
   } catch (error) {
-    res.status(500).json(errorResponse(500, error.message, null));
+    res.status(_apiCode.ERR_DEFAULT).json(errorResponse(_apiCode.ERR_DEFAULT, error.message, null));
   }
 };
 
@@ -97,9 +98,9 @@ export const AdminGetAllCategoriesByRestaurantId = async (req, res) => {
     const recordCount = count;
     const pageCount = calculatePageCount(count, size);
     const response = successPaginationResponse(categories, recordCount, page, size, pageCount);
-    res.status(200).json(successResponse(response));
+    res.status(_apiCode.SUCCESS).json(successResponse(response));
   } catch (error) {
-    res.status(500).json(errorResponse(500, error.message, null));
+    res.status(_apiCode.ERR_DEFAULT).json(errorResponse(_apiCode.ERR_DEFAULT, error.message, null));
   }
 };
 
@@ -112,7 +113,7 @@ export const UpdateCategory = async (req, res) => {
   try {
     const existingCategory = await findCategoryByName(name, restaurantId);
     if (existingCategory && existingCategory._id.toString() !== _id) {
-      return res.status(400).json(errorResponse(400, "Another category with the same name already exists", null));
+      return res.json(errorResponse(_apiCode.ERR_DEFAULT, "Another category with the same name already exists", null));
     }
 
     const updatedCategory = await CategoriesModel.findByIdAndUpdate(
@@ -126,7 +127,7 @@ export const UpdateCategory = async (req, res) => {
     }
     res.status(200).json(successResponse(updatedCategory._id)); 
   } catch (error) {
-    res.status(500).json(errorResponse(500, error.message, null));
+    res.json(errorResponse(_apiCode.ERR_DEFAULT, error.message, null));
   }
 };
 
@@ -144,7 +145,7 @@ export const DeleteCategory = async (req, res) => {
     }
     res.status(200).json(successResponse("Category inactive successfully")); 
   } catch (error) {
-    res.status(500).json(errorResponse(500, error.message, null));
+    res.json(errorResponse(_apiCode.ERR_DEFAULT, error.message, null));
   }
 };
 
@@ -166,7 +167,7 @@ export const AdminGetCategoryById = async (req, res) => {
     }
     res.status(200).json(successResponse(category)); 
   } catch (error) {
-    res.status(500).json(errorResponse(500, error.message, null));
+    res.json(errorResponse(_apiCode.ERR_DEFAULT, error.message, null));
   }
 };
 
@@ -178,6 +179,6 @@ export const UserGetAllCategoryByRestaurantId = async (req, res) => {
 
     res.status(200).json(successResponse(categories));
   } catch (error) {
-    res.status(500).json(errorResponse(500, error.message, null));
+    res.json(errorResponse(_apiCode.ERR_DEFAULT, error.message, null));
   }
 };

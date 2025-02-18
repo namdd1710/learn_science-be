@@ -1,7 +1,8 @@
+import { _apiCode } from "../errors/errors.js";
 
 export const successResponse = (result) => {
   return {
-    errorCode: 200,
+    errorCode: _apiCode.SUCCESS,
     errorMessage: "success",
     result: result
   };
@@ -9,7 +10,7 @@ export const successResponse = (result) => {
 
 export const successPaginationResponse = (result, count, page, size,pageCount) => {
   return {
-    errorCode: 200,
+    errorCode: _apiCode.SUCCESS,
     errorMessage: "success",
     recordCount: count,
     pageCount: pageCount,

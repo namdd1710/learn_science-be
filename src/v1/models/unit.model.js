@@ -1,24 +1,29 @@
 import mongoose, { Schema } from "mongoose";
 import RecordInfoSchema from "./recordInfo.model.js";
+import ForeignKeySchema from "./foreign-key.model.js";
 
-const GradeModel = new Schema(
+const UnitModel = new Schema(
   {
     name: {
       type: String,
-      // required: true,
-      // minlength: 5,
+      required: true,
+      minlength: 5,
     },
     status: { 
       type: Number, 
       default: 0,
       
     },
+    grade:{
+      type:  ForeignKeySchema,
+    },
+    lessons:[mongoose.Schema.Types.ObjectId],
     recordInfo: {
       type: RecordInfoSchema,
-      // required: true,
+      required: true,
     },
   },
   { timestamps: true }
 )
 
-export default mongoose.model("grades", GradeModel);
+export default mongoose.model("units", UnitModel);

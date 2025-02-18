@@ -5,7 +5,7 @@ export const checkAuthorization = (req, res, next) => {
   const authorization = req?.headers?.authorization;
 
   if (!authorization) {
-    return res?.status(401).json(errorResponse(401, "Unauthorized", ""));
+    return res?.status(401).json(errorResponse({ status: 401, message: "Unauthorized", data: "" }));
   }
 
   next();
@@ -24,3 +24,7 @@ export const CheckUserRolePermission = (role) => {
     }
   };
 };
+
+export const RegisterNewAccountValidation = (req, res, next) => {
+
+}
