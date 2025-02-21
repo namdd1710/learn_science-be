@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import ForeignKeySchema from "./foreign-key.model.js";
 import RecordInfoSchema from "./recordInfo.model.js";
 
@@ -6,7 +6,7 @@ import RecordInfoSchema from "./recordInfo.model.js";
 const QuestionTemplateSchema = new Schema({
   prompt: { type: String, required: true },
   question: { type: String, required: true },
-});
+},{ _id: false });
 
 // QuestionPrompt schema
 const QuestionPromptSchema = new Schema({
@@ -15,7 +15,7 @@ const QuestionPromptSchema = new Schema({
   audioLink: String,
   images: [String],
   video: [String],
-});
+},{ _id: false });
 
 // QuestionQuestion schema
 const QuestionQuestionSchema = new Schema({
@@ -25,7 +25,7 @@ const QuestionQuestionSchema = new Schema({
   targets: [String],
   choices: [String],
   solutions: [Schema.Types.Mixed], // 'any' type in Go can be Schema.Types.Mixed in Mongoose
-});
+},{ _id: false });
 
 // QuestionExplanation schema
 const QuestionExplanationSchema = new Schema({
@@ -33,12 +33,12 @@ const QuestionExplanationSchema = new Schema({
   audioText: String,
   audioLink: String,
   images: [String],
-});
+},{ _id: false });
 
 
 const QuestionModel = new Schema(
   {
-    status: { type: Number },
+    status: { type: Number, default: 0 },
     type: { type: Number },
     template: { type: QuestionTemplateSchema },
     prompt: { type: QuestionPromptSchema },

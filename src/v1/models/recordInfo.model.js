@@ -6,6 +6,6 @@ const RecordInfoSchema = new Schema({
   updatedAt: { type: Date, default: Date.now },
   createdBy: { type: ForeignKeySchema,  },
   updatedBy: { type: ForeignKeySchema, },
-});
+},{ _id: false });
 
 export default RecordInfoSchema;

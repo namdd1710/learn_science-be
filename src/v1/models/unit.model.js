@@ -6,8 +6,6 @@ const UnitModel = new Schema(
   {
     name: {
       type: String,
-      required: true,
-      minlength: 5,
     },
     status: { 
       type: Number, 
@@ -20,7 +18,6 @@ const UnitModel = new Schema(
     lessons:[mongoose.Schema.Types.ObjectId],
     recordInfo: {
       type: RecordInfoSchema,
-      required: true,
     },
   },
   { timestamps: true }
