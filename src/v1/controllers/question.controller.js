@@ -29,6 +29,7 @@ export const AddNewQuestion = async (req, res) => {
     question,
     template,
     prompt,
+    explanation
   } = req.body;
   try {
     const newObject = req.body;
@@ -69,6 +70,7 @@ export const AddNewQuestion = async (req, res) => {
     newObject.question = question;
     newObject.prompt = prompt;
     newObject.template = template;
+    newObject.explanation = explanation;
 
     var creatorId = getUserIdFromRequest(req);
     var creatorName = getUserNameFromRequest(req);
@@ -102,16 +104,16 @@ export const AdminGetAQuestion = async (req, res) => {
 
 export const AdminEditAQuestion = async (req, res) => {
   const { id } = req.params;
-  const { gradeIds, unitIds, lessonIds, question, template, prompt } = req.body;
+  const { gradeIds, unitIds, lessonIds, question, template, prompt,explanation } = req.body;
   try {
-    const question = await questionModel.findById(id);
-    if (!question) {
+    const questionRecord = await questionModel.findById(id);
+    if (!questionRecord) {
       return res
         .status(_apiCode.ERR_DEFAULT)
         .json(errorResponse(_apiCode.ERR_DEFAULT, "Question not found", null));
     }
 
-    if (question.status != questionStatus.QUESTION_INACTIVE_STATUS) {
+    if (questionRecord.status != questionStatus.QUESTION_INACTIVE_STATUS) {
       return res
         .status(_apiCode.ERR_DEFAULT)
         .json(
@@ -146,6 +148,7 @@ export const AdminEditAQuestion = async (req, res) => {
     updateObject.question = question;
     updateObject.prompt = prompt;
     updateObject.template = template;
+    updateObject.explanation = explanation;
     updateObject.recordInfo = updateRecordInfo(
       question.recordInfo,
       getUserIdFromRequest(req),

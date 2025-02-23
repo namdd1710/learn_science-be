@@ -12,6 +12,8 @@ import unitRoute from "./v1/routes/unit.route.js";
 import gradeRoute from "./v1/routes/grade.route.js";
 import categoriesRoute from "./v1/routes/categories.router.js";
 import cors from "cors";
+import utilitiesRoute from "./v1/routes/utilities.route.js";
+import { _apiCode } from "./v1/errors/errors.js";
 
 
 const app = express();
@@ -45,6 +47,7 @@ app.use(BASE_PATH, questionRoute);
 app.use(BASE_PATH, unitRoute);
 app.use(BASE_PATH, gradeRoute);
 app.use(BASE_PATH, categoriesRoute);
+app.use(BASE_PATH, utilitiesRoute);
 
 
 mongoose

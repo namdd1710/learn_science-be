@@ -27,6 +27,24 @@ export const RegisterNewUser = async (req, res) => {
   }
 };
 
+export const UserUpdateImage = async (userId, imageUrl) => {
+  try {
+    const user = await UsersModel.findByIdAndUpdate(
+      userId,
+      {image: imageUrl }, // Cập nhật field imageUrl
+      { new: true } // Trả về document mới sau khi update
+    );
+
+    if (!user) {
+      return res.status(_apiCode.ERR_DEFAULT).json(errorResponse(_apiCode.ERR_DEFAULT, "User not found", null));
+    }
+
+    res.status(_apiCode.SUCCESS).json(successResponse(null));
+  } catch (error) {
+    return res.status(_apiCode.ERR_DEFAULT).json(errorResponse(_apiCode.ERR_DEFAULT, error.message, null));
+  }
+}
+
 
 const filterOneUser = async(filter) => {
   try {

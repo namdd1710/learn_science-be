@@ -8,3 +8,7 @@ export const RegisterNewAccountRequest = validateRequest([
   body("phone").isString().notEmpty().withMessage("phone is required"),
   body("password").isString().notEmpty().withMessage("password is required"),
 ])
+
+export const UserUpdateImageRequest = validateRequest([
+  body("image").isString().notEmpty().withMessage("image is required"),
+])
