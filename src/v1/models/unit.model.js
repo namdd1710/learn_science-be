@@ -12,6 +12,9 @@ const UnitModel = new Schema(
       default: 0,
       
     },
+    videos:{
+      type: [String]
+    },
     grade:{
       type:  ForeignKeySchema,
     },

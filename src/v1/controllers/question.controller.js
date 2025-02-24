@@ -3,6 +3,7 @@ import {
   createRecordInfo,
   foreignKeyType,
   questionStatus,
+  updateRecordInfo,
 } from "../constants/constant.js";
 import { _apiCode } from "../errors/errors.js";
 import questionModel from "../models/question.model.js";

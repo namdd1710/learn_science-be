@@ -2,18 +2,26 @@ import {
   createForeignKey,
   createRecordInfo,
   unitStatus,
+  updateRecordInfo,
 } from "../constants/constant.js";
 import { _apiCode } from "../errors/errors.js";
 import unitModel from "../models/unit.model.js";
+import {unitResponse,lessonItemInUnit} from "../response/unit-controller_responses/user-get-an-unit_response.js";
 import {
   getUserIdFromRequest,
   getUserNameFromRequest,
 } from "../secure/secure.js";
-import { calculatePageCount, errorResponse, successPaginationResponse, successResponse } from "../utils/response.js";
+import {
+  calculatePageCount,
+  errorResponse,
+  successPaginationResponse,
+  successResponse,
+} from "../utils/response.js";
 import { findGradeById } from "./grade.controller.js";
+import { findLessonByIds } from "./lesson.controller.js";
 
 export const AddNewUnit = async (req, res) => {
-  const { name, gradeId } = req.body;
+  const { name, gradeId, videos } = req.body;
   try {
     const existingUnit = await findUnitByName(name);
     if (existingUnit) {
@@ -42,13 +50,59 @@ export const AddNewUnit = async (req, res) => {
 export const UserGetAnUnit = async (req, res) => {
   const { id } = req.params;
   try {
+    let response = unitResponse;
     const unit = await unitModel.findById(id);
     if (!unit) {
       return res
         .status(_apiCode.ERR_DEFAULT)
         .json(errorResponse(_apiCode.ERR_DEFAULT, "Unit not found", null));
     }
-    res.status(_apiCode.SUCCESS).json(successResponse(unit));
+    if (unit.lessons?.length > 0) {
+      let lessons = await findLessonByIds(unit.lessons)
+      lessons.forEach(element => {
+        let item = lessonItemInUnit
+        item.id = element._id
+        item.title = element.title
+        response.lessons.push(item)
+      });
+    }
+    response._id = unit._id;
+    response.name = unit.name;
+    response.grade.id = unit.grade.id;
+    response.grade.name = unit.grade.name;
+    response.videos = unit.videos;
+    res.status(_apiCode.SUCCESS).json(successResponse(response));
+  } catch (error) {
+    res
+      .status(_apiCode.ERR_DEFAULT)
+      .json(errorResponse(_apiCode.ERR_DEFAULT, error.message, null));
+  }
+};
+
+export const UserGetGradeUnits = async (req, res) => {
+  const { id } = req.params;
+  try {
+    let response = [];
+    const unit = await unitModel.find({ "grade.id": id });
+    if (!unit) {
+      return res
+        .status(_apiCode.ERR_DEFAULT)
+        .json(errorResponse(_apiCode.ERR_DEFAULT, "Unit not found", null));
+    }
+    console.log("length", response.length)
+
+    unit.forEach(item => {
+      let element = unitResponse
+      element._id = item._id;
+      element.name = item.name;
+      element.grade.id = item.grade.id;
+      element.grade.name = item.grade.name;
+      element.lessons = item.lessons;
+      element.videos = item.videos;
+      response.push(element)
+    });
+    console.log("length", response.length)
+    res.status(_apiCode.SUCCESS).json(successResponse(response));
   } catch (error) {
     res
       .status(_apiCode.ERR_DEFAULT)
@@ -75,24 +129,28 @@ export const AdminGetAnUnit = async (req, res) => {
 
 export const AdminGetAllUnits = async (req, res) => {
   try {
-    var { page = 1, size = 10, sort, gradeId } = req.query;
-    page = parseInt(page,10);
-    size = parseInt(size,10);
-    var filter = {};
-    if (gradeId !== undefined) {
-      filter.gradeId = gradeId;
-    }
+    var { page = 1, size = 10, sort, gradeId, filter, status } = req.query;
+    page = parseInt(page, 10);
+    size = parseInt(size, 10);
     const skip = (page - 1) * size;
-    let query = unitModel.find(filter).skip(skip).limit(size);
-    if (sort !== undefined && sort.nameField) {
-      query = query.sort({ [sort.nameField]: sort.order });
+    let query = unitModel.find({}).skip(skip).limit(size);
+    if (gradeId !== undefined) {
+      query = query.where("grade.id").equals(gradeId);
     }
-    const units = await query;
-    const count = await unitModel.countDocuments(filter);
+    if (status !== undefined) {
+      query = query.where("status").equals(status);
+    }
+    if (filter !== undefined) {
+      query = query.or([
+        { "name": { $elemMatch: { $regex: new RegExp(filter, "i") } } },
+      ]);
+    }
+    const count = await unitModel.countDocuments({});
+    const questions = await query;
     const recordCount = count;
     const pageCount = calculatePageCount(count, size);
     const response = successPaginationResponse(
-      units,
+      questions,
       recordCount,
       page,
       size,
@@ -109,7 +167,7 @@ export const AdminGetAllUnits = async (req, res) => {
 export const AdminEditAnUnit = async (req, res) => {
   const { id } = req.params;
   try {
-    const { name, gradeId } = req.body;
+    const { name, gradeId, videos } = req.body;
     const unit = await unitModel.findById(id);
     if (!unit) {
       return res

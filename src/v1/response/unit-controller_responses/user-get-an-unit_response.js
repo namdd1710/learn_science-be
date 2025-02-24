@@ -1,13 +1,15 @@
 const lessonItemInUnit = {
   id: "",
   title: "",
-}
+};
 const unitResponse = {
   _id: "",
   name: "",
-  grade:{
+  grade: {
     id: "",
     name: "",
   },
-  lessons: [lessonItemInUnit],
-}
+  lessons: [],
+  videos: [],
+};
+export { unitResponse, lessonItemInUnit };
