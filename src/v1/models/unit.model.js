@@ -19,6 +19,8 @@ const UnitModel = new Schema(
       type:  ForeignKeySchema,
     },
     lessons:[mongoose.Schema.Types.ObjectId],
+    quiz: {
+      type: mongoose.Schema.Types.ObjectId,},
     recordInfo: {
       type: RecordInfoSchema,
     },

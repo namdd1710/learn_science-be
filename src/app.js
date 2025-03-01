@@ -14,7 +14,8 @@ import categoriesRoute from "./v1/routes/categories.router.js";
 import cors from "cors";
 import utilitiesRoute from "./v1/routes/utilities.route.js";
 import { _apiCode } from "./v1/errors/errors.js";
-
+import quizRoute from "./v1/routes/quiz.route.js";
+import practiceQuizRoute from "./v1/routes/practice-quiz.route.js";
 
 const app = express();
 dotenv.config();
@@ -37,7 +38,7 @@ app.use(
     extended: true,
   })
 );
-var BASE_PATH = "/api"
+var BASE_PATH = "/api";
 //router
 // app.use(BASE_PATH, routes);
 app.use(BASE_PATH, authRoute);
@@ -48,10 +49,10 @@ app.use(BASE_PATH, unitRoute);
 app.use(BASE_PATH, gradeRoute);
 app.use(BASE_PATH, categoriesRoute);
 app.use(BASE_PATH, utilitiesRoute);
+app.use(BASE_PATH, quizRoute);
+app.use(BASE_PATH, practiceQuizRoute);
 
-
-mongoose
-
+mongoose;
 
 // Error Handling Middleware called
 
@@ -72,4 +73,3 @@ app.use((error, req, res, next) => {
 });
 
 export default app;
-

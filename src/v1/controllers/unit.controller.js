@@ -89,7 +89,6 @@ export const UserGetGradeUnits = async (req, res) => {
         .status(_apiCode.ERR_DEFAULT)
         .json(errorResponse(_apiCode.ERR_DEFAULT, "Unit not found", null));
     }
-    console.log("length", response.length)
 
     unit.forEach(item => {
       let element = unitResponse
@@ -101,7 +100,6 @@ export const UserGetGradeUnits = async (req, res) => {
       element.videos = item.videos;
       response.push(element)
     });
-    console.log("length", response.length)
     res.status(_apiCode.SUCCESS).json(successResponse(response));
   } catch (error) {
     res

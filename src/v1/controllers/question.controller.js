@@ -30,12 +30,12 @@ export const AddNewQuestion = async (req, res) => {
     question,
     template,
     prompt,
-    explanation
+    explanation,
   } = req.body;
   try {
     const newObject = req.body;
 
-    const [ gradeRes, unitRes, lessonRes ] = await Promise.all([
+    const [gradeRes, unitRes, lessonRes] = await Promise.all([
       findGradeByIds(gradeIds),
       findUnitByIds(unitIds),
       findLessonByIds(lessonIds),
@@ -44,7 +44,6 @@ export const AddNewQuestion = async (req, res) => {
     var grades = [foreignKeyType];
     var lessons = [foreignKeyType];
     var units = [foreignKeyType];
-    console.log("gradeRes", gradeRes);
     if (gradeRes?.length > 0) {
       grades = gradeRes?.map((item) =>
         createForeignKey(item._id, item.name, "grades")
@@ -105,7 +104,15 @@ export const AdminGetAQuestion = async (req, res) => {
 
 export const AdminEditAQuestion = async (req, res) => {
   const { id } = req.params;
-  const { gradeIds, unitIds, lessonIds, question, template, prompt,explanation } = req.body;
+  const {
+    grades: gradeIds,
+    units: unitIds,
+    lessons: lessonIds,
+    question,
+    template,
+    prompt,
+    explanation,
+  } = req.body;
   try {
     const questionRecord = await questionModel.findById(id);
     if (!questionRecord) {
@@ -123,7 +130,7 @@ export const AdminEditAQuestion = async (req, res) => {
     }
     const updateObject = req.body;
 
-    const { gradeRes, unitRes, lessonRes } = await Promise.all([
+    const [gradeRes, unitRes, lessonRes] = await Promise.all([
       findGradeByIds(gradeIds),
       findUnitByIds(unitIds),
       findLessonByIds(lessonIds),
@@ -151,7 +158,7 @@ export const AdminEditAQuestion = async (req, res) => {
     updateObject.template = template;
     updateObject.explanation = explanation;
     updateObject.recordInfo = updateRecordInfo(
-      question.recordInfo,
+      questionRecord.recordInfo,
       getUserIdFromRequest(req),
       getUserNameFromRequest(req)
     );
@@ -303,30 +310,49 @@ export const findQuestionById = async (id) => {
   try {
     const question = await questionModel.findById(id);
     if (!question) {
-      return res
-        .status(_apiCode.ERR_DEFAULT)
-        .json(errorResponse(_apiCode.ERR_DEFAULT, "Question not found", null));
+       throw new Error("Question not found");
     }
     return question;
   } catch (error) {
-    res
-      .status(_apiCode.ERR_DEFAULT)
-      .json(errorResponse(_apiCode.ERR_DEFAULT, error.message, null));
+    throw new Error( "Error finding question by id: " + error.message);
   }
 };
 
 export const findQuestionByIds = async (ids) => {
   try {
-    const question = await questionModel.findById(ids);
-    if (!question) {
-      return res
-        .status(_apiCode.ERR_DEFAULT)
-        .json(errorResponse(_apiCode.ERR_DEFAULT, "Question not found", null));
+    const question = await questionModel.find({ _id: { $in: ids } });
+    if (!question || question.length != ids.length) {
+       throw new Error("Question not found");
     }
     return question;
   } catch (error) {
-    res
-      .status(_apiCode.ERR_DEFAULT)
-      .json(errorResponse(_apiCode.ERR_DEFAULT, error.message, null));
+    throw new Error( "Error finding question by ids: " + error.message);
+  }
+};
+
+export const validateQuestionIds = (questionIds, questions) => {
+  if (questionIds.length !== questions.length) {
+    let errorMessage = "Không tồn tại questionId:";
+    questionIds.forEach((id) => {
+      const exists = questions.some((q) => q.Id === id);
+      if (!exists) {
+        errorMessage += ` ${id};`;
+      }
+    });
+    throw new Error(errorMessage);
+  }
+};
+
+export const getListQuestionQuiz = async (ids) => {
+  try {
+    const questions = await questionModel.find({ _id: { $in: ids } });
+    validateQuestionIds(ids, questions);
+    let questionIds = [];
+    questions.forEach((question) => {
+      questionIds.push(question._id);
+    });
+    return questionIds;
+  } catch (error) {
+    throw new Error( "Error finding question by ids: " + error.message);
   }
 };

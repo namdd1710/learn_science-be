@@ -69,7 +69,6 @@ export const GetAllGrade = async (req, res) => {
 export const findGradeByIds = async (ids) => {
   try {
     const grades = await gradeModel.find({ _id: { $in: ids } });
-    console.log("response",grades)
     return grades;
   } catch (error) {
     throw new Error(`Error finding grade by ids: ${error.message}`);

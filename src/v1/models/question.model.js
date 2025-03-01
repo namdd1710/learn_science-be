@@ -3,13 +3,13 @@ import ForeignKeySchema from "./foreign-key.model.js";
 import RecordInfoSchema from "./recordInfo.model.js";
 
 // QuestionTemplate schema
-const QuestionTemplateSchema = new Schema({
+export const QuestionTemplateSchema = new Schema({
   prompt: { type: String, required: true },
   question: { type: String, required: true },
 },{ _id: false });
 
 // QuestionPrompt schema
-const QuestionPromptSchema = new Schema({
+export const QuestionPromptSchema = new Schema({
   texts: [String],
   audioText: String,
   audioLink: String,
@@ -18,7 +18,7 @@ const QuestionPromptSchema = new Schema({
 },{ _id: false });
 
 // QuestionQuestion schema
-const QuestionQuestionSchema = new Schema({
+export const QuestionQuestionSchema = new Schema({
   texts: [String],
   audioText: String,
   audioLink: String,
@@ -28,7 +28,7 @@ const QuestionQuestionSchema = new Schema({
 },{ _id: false });
 
 // QuestionExplanation schema
-const QuestionExplanationSchema = new Schema({
+export const QuestionExplanationSchema = new Schema({
   texts: [String],
   audioText: String,
   audioLink: String,

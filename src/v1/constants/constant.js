@@ -51,3 +51,8 @@ export const unitStatus = {
   UNIT_ACTIVE_STATUS: 1,
   UNIT_DELETE_STATUS: 2,
 };
+
+export const quizStatus ={
+  QUIZ_INACTIVE_STATUS: 0,
+  QUIZ_ACTIVE_STATUS: 1,
+}
