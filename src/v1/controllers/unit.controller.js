@@ -98,6 +98,7 @@ export const UserGetGradeUnits = async (req, res) => {
       element.grade.name = item.grade.name;
       element.lessons = item.lessons;
       element.videos = item.videos;
+      element.quizId = item.quizId
       response.push(element)
     });
     res.status(_apiCode.SUCCESS).json(successResponse(response));

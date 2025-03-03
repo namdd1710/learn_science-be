@@ -7,25 +7,26 @@ const UnitModel = new Schema(
     name: {
       type: String,
     },
-    status: { 
-      type: Number, 
+    status: {
+      type: Number,
       default: 0,
-      
     },
-    videos:{
-      type: [String]
+    videos: {
+      type: [String],
     },
-    grade:{
-      type:  ForeignKeySchema,
+    grade: {
+      type: ForeignKeySchema,
     },
-    lessons:[mongoose.Schema.Types.ObjectId],
-    quiz: {
-      type: mongoose.Schema.Types.ObjectId,},
+    lessons: [mongoose.Schema.Types.ObjectId],
+    quizId: {
+      type: mongoose.Schema.Types.ObjectId,
+      default: null,
+    },
     recordInfo: {
       type: RecordInfoSchema,
     },
   },
   { timestamps: true }
-)
+);
 
 export default mongoose.model("units", UnitModel);

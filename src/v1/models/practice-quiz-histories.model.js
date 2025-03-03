@@ -12,9 +12,6 @@ const PracticeQuizHistoryQuestionSchema = new Schema({
 
 const PracticeQuizHistoriesModel = new Schema(
   {
-    name: {
-      type: String,
-    },
     quizId: { type: mongoose.Schema.Types.ObjectId, ref: "quiz" },
     practiceQuizId: { type: mongoose.Schema.Types.ObjectId, ref: "practice-quiz" },
     user: { type: ForeignKeySchema },

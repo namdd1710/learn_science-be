@@ -319,9 +319,9 @@ export const userSubmitPracticeQuizAnswers = async (practice) => {
   }
 };
 
-export const DeleteOnePracticeQuiz = async (id) => {
+export const DeleteOnePracticeQuiz = async (ids) => {
   try {
-    await practiceQuizModel.deleteOne({ _id: id });
+    await practiceQuizModel.deleteMany({ _id: { $in: ids } });
   } catch (error) {
     throw new Error(error.message);
   }

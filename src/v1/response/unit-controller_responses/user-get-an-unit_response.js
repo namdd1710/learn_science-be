@@ -11,5 +11,6 @@ const unitResponse = {
   },
   lessons: [],
   videos: [],
+  quizId:null
 };
 export { unitResponse, lessonItemInUnit };
