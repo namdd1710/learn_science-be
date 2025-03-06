@@ -288,11 +288,11 @@ export const UserGetQuizInformation = async (req, res) => {
     } else {
       const firstPracticeQuiz = practiceQuizzes[0];
       if (firstPracticeQuiz.submitted === true) {
-        response.practiceQuizId = firstPracticeQuiz._id;
-        response.numberQuestions = firstPracticeQuiz.numberQuestions;
-        response.correctAnswers = firstPracticeQuiz.correctAnswers;
-        response.wrongAnswers = firstPracticeQuiz.wrongAnswers;
-        response.skippedAnswers = firstPracticeQuiz.skippedAnswers;
+        response.practiceQuizIdLP = firstPracticeQuiz._id;
+        response.numberQuestionsLP = firstPracticeQuiz.numberQuestions;
+        response.correctAnswersLP = firstPracticeQuiz.correctAnswers;
+        response.wrongAnswersLP = firstPracticeQuiz.wrongAnswers;
+        response.skippedAnswersLP = firstPracticeQuiz.skippedAnswers;
       } else {
         response.practiceQuizId = firstPracticeQuiz._id;
         response.numberQuestions = firstPracticeQuiz.numberQuestions;
