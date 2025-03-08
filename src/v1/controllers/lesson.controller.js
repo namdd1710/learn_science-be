@@ -115,10 +115,10 @@ export const AdminEditALesson = async (req, res) => {
 };
 
 export const AdminInActiveLessons = async (req, res) => {
-  const { ids } = req.body;
+  const { lessonIds } = req.body;
   try {
     await lessonModel.updateMany(
-      { _id: { $in: ids } },
+      { _id: { $in: lessonIds } },
       {
         status: lessonStatus.LESSON_INACTIVE_STATUS,
         "recordInfo.updatedAt": Date.now(),
@@ -198,7 +198,7 @@ export const AdminGetListLessonPagination = async (req, res) => {
 export const UserGetALesson = async (req, res) => {
   const { id } = req.params;
   try {
-    const lesson = await findLessonById(id);
+    const lesson = await findLessonByIdAndStatus(id, lessonStatus.LESSON_ACTIVE_STATUS);
     if (!lesson) {
       return res
         .status(_apiCode.ERR_DEFAULT)
@@ -216,6 +216,15 @@ export const UserGetALesson = async (req, res) => {
 export const findLessonById = async (id) => {
   try {
     const lesson = await lessonModel.findById(id);
+    return lesson;
+  } catch (error) {
+    throw new Error(`Error finding lesson by id: ${error.message}`);
+  }
+};
+
+export const findLessonByIdAndStatus = async (id,status) => {
+  try {
+    const lesson = await lessonModel.findOne({ _id: id, status: status });
     return lesson;
   } catch (error) {
     throw new Error(`Error finding lesson by id: ${error.message}`);

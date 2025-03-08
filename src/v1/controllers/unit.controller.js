@@ -51,7 +51,7 @@ export const UserGetAnUnit = async (req, res) => {
   const { id } = req.params;
   try {
     let response = unitResponse;
-    const unit = await unitModel.findById(id);
+    const unit = await unitModel.findOne({ _id: id, status: unitStatus.UNIT_ACTIVE_STATUS });
     if (!unit) {
       return res
         .status(_apiCode.ERR_DEFAULT)
@@ -83,7 +83,7 @@ export const UserGetGradeUnits = async (req, res) => {
   const { id } = req.params;
   try {
     let response = [];
-    const unit = await unitModel.find({ "grade.id": id });
+    const unit = await unitModel.find({ "grade.id": id, status: unitStatus.UNIT_ACTIVE_STATUS });
     if (!unit) {
       return res
         .status(_apiCode.ERR_DEFAULT)
@@ -227,10 +227,10 @@ export const AdminInActiveUnits = async (req, res) => {
 };
 
 export const AdminActiveUnits = async (req, res) => {
-  const { ids } = req.body;
+  const { unitIds } = req.body;
   try {
     await unitModel.updateMany(
-      { _id: { $in: ids } },
+      { _id: { $in: unitIds } },
       {
         status: unitStatus.UNIT_ACTIVE_STATUS,
         "recordInfo.updatedAt": Date.now(),
