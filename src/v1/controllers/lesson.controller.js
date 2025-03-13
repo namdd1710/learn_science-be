@@ -176,7 +176,7 @@ export const AdminGetListLessonPagination = async (req, res) => {
     if (filter !== undefined) {
       query = query.where("title").regex(new RegExp(filter, "i"));
     }
-    const count = await lessonModel.countDocuments({});
+    const count = await lessonModel.countDocuments(query);
     const lessons = await query;
     const recordCount = count;
     const pageCount = calculatePageCount(count, size);

@@ -144,7 +144,7 @@ export const AdminGetAllUnits = async (req, res) => {
         { "name": { $elemMatch: { $regex: new RegExp(filter, "i") } } },
       ]);
     }
-    const count = await unitModel.countDocuments({});
+    const count = await unitModel.countDocuments(query);
     const questions = await query;
     const recordCount = count;
     const pageCount = calculatePageCount(count, size);

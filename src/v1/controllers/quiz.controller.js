@@ -110,7 +110,7 @@ export const AdminGetListQuiz = async (req, res) => {
         { name: { $elemMatch: { $regex: new RegExp(filter, "i") } } },
       ]);
     }
-    const count = await quizModel.countDocuments({});
+    const count = await quizModel.countDocuments(query);
     const list = await query;
     const recordCount = count;
     const pageCount = calculatePageCount(recordCount, size);

@@ -55,7 +55,7 @@ export const AddNewQuestion = async (req, res) => {
     }
     if (unitRes?.length > 0) {
       units = unitRes?.map((item) =>
-        createForeignKey(item._id, item.title, "units")
+        createForeignKey(item._id, item.name, "units")
       );
     }
     if (lessonRes?.length > 0) {
@@ -270,7 +270,7 @@ export const AdminGetListQuestionPagination = async (req, res) => {
         .where("template.question")
         .regex(new RegExp(templateQuestion, "i"));
     }
-    const count = await questionModel.countDocuments({});
+    const count = await questionModel.countDocuments(query);
     const questions = await query;
     const recordCount = count;
     const pageCount = calculatePageCount(count, size);
