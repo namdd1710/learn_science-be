@@ -16,7 +16,8 @@ export const userGetListQuestionsResponse = (questions) => {
       template: questions[i].template,
       prompt: questions[i].prompt,
       question: questions[i].question,
-      explanation: questions[i].explanation
+      explanation: questions[i].explanation,
+      type: questions[i].type
     });
   }
   return result
