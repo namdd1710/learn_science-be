@@ -50,7 +50,7 @@ export const AddNewUnit = async (req, res) => {
 export const UserGetAnUnit = async (req, res) => {
   const { id } = req.params;
   try {
-    let response = unitResponse;
+    let response = unitResponse();
     const unit = await unitModel.findOne({ _id: id, status: unitStatus.UNIT_ACTIVE_STATUS });
     if (!unit) {
       return res
@@ -60,7 +60,7 @@ export const UserGetAnUnit = async (req, res) => {
     if (unit.lessons?.length > 0) {
       let lessons = await findLessonByIds(unit.lessons)
       lessons.forEach(element => {
-        let item = lessonItemInUnit
+        let item = lessonItemInUnit()
         item.id = element._id
         item.title = element.title
         response.lessons.push(item)
@@ -91,7 +91,7 @@ export const UserGetGradeUnits = async (req, res) => {
     }
 
     unit.forEach(item => {
-      let element = unitResponse
+      let element = unitResponse();
       element._id = item._id;
       element.name = item.name;
       element.grade.id = item.grade.id;

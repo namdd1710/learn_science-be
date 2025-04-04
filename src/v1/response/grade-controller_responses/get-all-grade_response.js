@@ -9,6 +9,7 @@ export const getAllGradesResponse = (grades) => {
     result.push({
       _id: grades[i]._id,
       name: grades[i].name,
+      image:""
     });
   }
   return result;

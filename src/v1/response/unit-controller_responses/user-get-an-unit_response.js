@@ -1,16 +1,18 @@
-const lessonItemInUnit = {
+const lessonItemInUnit =()=>( {
   id: "",
   title: "",
-};
-const unitResponse = {
+  image:""
+});
+const unitResponse =()=> ({
   _id: "",
   name: "",
   grade: {
     id: "",
     name: "",
   },
+  image: "",
   lessons: [],
   videos: [],
   quizId:null
-};
+});
 export { unitResponse, lessonItemInUnit };

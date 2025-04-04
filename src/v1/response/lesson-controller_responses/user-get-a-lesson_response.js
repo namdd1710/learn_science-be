@@ -4,7 +4,7 @@ const lessonResponse = {
   unitId: "",
   unitName: "",
   gradeId: "",
-  gradeName: ""
+  gradeName: "",
 }
 export const getALessonResponse = (lesson) => {
   var result = lessonResponse
