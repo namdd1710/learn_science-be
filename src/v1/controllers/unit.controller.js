@@ -71,6 +71,7 @@ export const UserGetAnUnit = async (req, res) => {
     response.grade.id = unit.grade.id;
     response.grade.name = unit.grade.name;
     response.videos = unit.videos;
+    response.quizId = unit.quizId
     res.status(_apiCode.SUCCESS).json(successResponse(response));
   } catch (error) {
     res
