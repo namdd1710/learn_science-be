@@ -47,6 +47,7 @@ const QuestionModel = new Schema(
     lessons: [ForeignKeySchema],
     units: [ForeignKeySchema],
     grades: [ForeignKeySchema],
+    type: { type: Number },
     tags: [String],
     recordInfo: { type: RecordInfoSchema },
   },

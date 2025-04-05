@@ -16,6 +16,8 @@ import utilitiesRoute from "./v1/routes/utilities.route.js";
 import { _apiCode } from "./v1/errors/errors.js";
 import quizRoute from "./v1/routes/quiz.route.js";
 import practiceQuizRoute from "./v1/routes/practice-quiz.route.js";
+import achievementRoute from "./v1/routes/achievement.route.js";
+import userAchievementRoute from "./v1/routes/user-achievement.route.js";
 
 const app = express();
 dotenv.config();
@@ -51,6 +53,8 @@ app.use(BASE_PATH, categoriesRoute);
 app.use(BASE_PATH, utilitiesRoute);
 app.use(BASE_PATH, quizRoute);
 app.use(BASE_PATH, practiceQuizRoute);
+app.use(BASE_PATH, achievementRoute);
+app.use(BASE_PATH, userAchievementRoute);
 
 mongoose;
 

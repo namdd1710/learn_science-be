@@ -2,6 +2,12 @@ import mongoose, { Schema } from "mongoose";
 import ForeignKeySchema from "./foreign-key.model.js";
 import RecordInfoSchema from "./recordInfo.model.js";
 
+export const LessonHelpSchema = new Schema({
+  videos:[String],
+  images: [String],
+  type: { type: Number },
+},{ _id: false });
+
 const LessonsModel = new Schema(
   {
     title: {
@@ -25,6 +31,7 @@ const LessonsModel = new Schema(
       type: ForeignKeySchema,
       // required: true,
     },
+    helps: [LessonHelpSchema],
     recordInfo: {
      type: RecordInfoSchema,
     //  required: true

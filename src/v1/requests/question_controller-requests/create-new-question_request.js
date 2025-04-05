@@ -43,4 +43,5 @@ export const CreateNewQuestionRequest = validateRequest([
     }
     return true;
   }),
+  body("type").isInt().withMessage("type is required"),
 ])

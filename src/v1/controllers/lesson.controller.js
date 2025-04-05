@@ -216,6 +216,9 @@ export const UserGetALesson = async (req, res) => {
 export const findLessonById = async (id) => {
   try {
     const lesson = await lessonModel.findById(id);
+    if (!lesson) {
+      throw new Error("Lesson not found");
+    }
     return lesson;
   } catch (error) {
     throw new Error(`Error finding lesson by id: ${error.message}`);
@@ -225,6 +228,9 @@ export const findLessonById = async (id) => {
 export const findLessonByIdAndStatus = async (id,status) => {
   try {
     const lesson = await lessonModel.findOne({ _id: id, status: status });
+    if (!lesson) {
+      throw new Error("Lesson not found");
+    }
     return lesson;
   } catch (error) {
     throw new Error(`Error finding lesson by id: ${error.message}`);
@@ -242,6 +248,9 @@ export const findLessonByIds = async (ids) => {
 export const findLessonByName = async (name) => {
   try {
     const lesson = await lessonModel.findOne({ name });
+    if (!lesson) {
+      throw new Error("Lesson not found");
+    }
     return lesson;
   } catch (error) {
     throw new Error(`Error finding lesson by name: ${error.message}`);

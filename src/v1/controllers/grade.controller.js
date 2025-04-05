@@ -28,6 +28,9 @@ export const AddNewGrade = async (req, res) => {
 export const findGradeByName = async (name) => {
   try {
     const grade = await gradeModel.findOne({name});
+    if (!grade) {
+      throw new Error("Grade not found");
+    }
     return grade;
   } catch (error) {
     throw new Error(`Error finding grade by name: ${error.message}`);
@@ -37,6 +40,9 @@ export const findGradeByName = async (name) => {
 export const findGradeById = async (id) => {
   try {
     const grade = await gradeModel.findById(id);
+    if (!grade) {
+      throw new Error("Grade not found");
+    }
     return grade;
   } catch (error) {
     throw new Error(`Error finding grade by id: ${error.message}`);

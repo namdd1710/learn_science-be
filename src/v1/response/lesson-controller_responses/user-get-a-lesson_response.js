@@ -5,6 +5,7 @@ const lessonResponse = {
   unitName: "",
   gradeId: "",
   gradeName: "",
+  helps:[],
 }
 export const getALessonResponse = (lesson) => {
   var result = lessonResponse
@@ -14,5 +15,6 @@ export const getALessonResponse = (lesson) => {
   result.unitName = lesson.unit.name
   result.gradeId = lesson.grade.id
   result.gradeName = lesson.grade.name
+  result.helps = lesson.helps
   return result
 };

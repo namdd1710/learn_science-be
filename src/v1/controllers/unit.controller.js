@@ -252,6 +252,9 @@ export const AdminActiveUnits = async (req, res) => {
 export const findUnitByName = async (name) => {
   try {
     const unit = await unitModel.findOne({ name });
+    if (!unit) {
+      throw new Error("Unit not found");
+    }
     return unit;
   } catch (error) {
     throw new Error(`Error finding unit by name: ${error.message}`);
@@ -261,6 +264,9 @@ export const findUnitByName = async (name) => {
 export const findUnitById = async (id) => {
   try {
     const unit = await unitModel.findById(id);
+    if (!unit) {
+      throw new Error("Unit not found");
+    }
     return unit;
   } catch (error) {
     throw new Error(`Error finding unit by id: ${error.message}`);
