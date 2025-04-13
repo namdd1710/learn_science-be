@@ -33,6 +33,7 @@ export const QuestionExplanationSchema = new Schema({
   audioText: String,
   audioLink: String,
   images: [String],
+  videos: [String],
 },{ _id: false });
 
 
@@ -48,6 +49,7 @@ const QuestionModel = new Schema(
     units: [ForeignKeySchema],
     grades: [ForeignKeySchema],
     type: { type: Number },
+    order: { type: Number, default: 0 },
     tags: [String],
     recordInfo: { type: RecordInfoSchema },
   },

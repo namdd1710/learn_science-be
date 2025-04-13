@@ -4,6 +4,7 @@ import {
   foreignKeyType,
   questionStatus,
   updateRecordInfo,
+  userAchievementDifficulty,
 } from "../constants/constant.js";
 import { _apiCode } from "../errors/errors.js";
 import questionModel from "../models/question.model.js";
@@ -290,13 +291,40 @@ export const AdminGetListQuestionPagination = async (req, res) => {
 };
 
 export const UserGetListQuestionByLessonId = async (req, res) => {
-  const { lessonId } = req.params;
+  const { lessonId, } = req.params;
+  const {isRedo,type} = req.query
 
   try {
-    const questions = await questionModel.find({
+    const count = await questionModel.countDocuments({
       lessons: { $elemMatch: { id: lessonId } },
       status: questionStatus.QUESTION_ACTIVE_STATUS,
+      type: type || userAchievementDifficulty.START,
     });
+
+    const halfCount = Math.ceil(count / 2);
+
+    let questions;
+    if (isRedo === false || !isRedo) {
+      questions = await questionModel
+        .find({
+          lessons: { $elemMatch: { id: lessonId } },
+          status: questionStatus.QUESTION_ACTIVE_STATUS,
+          type: type || userAchievementDifficulty.START,
+        })
+        .sort({ order: 1,_id:1 })
+        .limit(halfCount);
+    } else if (isRedo) {
+      questions = await questionModel
+        .find({
+          lessons: { $elemMatch: { id: lessonId } },
+          status: questionStatus.QUESTION_ACTIVE_STATUS,
+          type: type || userAchievementDifficulty.START,
+        })
+        .sort({ order: 1,_id:1 })
+        .skip(halfCount)
+        .limit(count - halfCount);
+    }
+
     var response = userGetListQuestionsResponse(questions);
     res.status(_apiCode.SUCCESS).json(successResponse(response));
   } catch (error) {
@@ -310,11 +338,11 @@ export const findQuestionById = async (id) => {
   try {
     const question = await questionModel.findById(id);
     if (!question) {
-       throw new Error("Question not found");
+      throw new Error("Question not found");
     }
     return question;
   } catch (error) {
-    throw new Error( "Error finding question by id: " + error.message);
+    throw new Error("Error finding question by id: " + error.message);
   }
 };
 
@@ -322,11 +350,11 @@ export const findQuestionByIds = async (ids) => {
   try {
     const question = await questionModel.find({ _id: { $in: ids } });
     if (!question || question.length != ids.length) {
-       throw new Error("Question not found");
+      throw new Error("Question not found");
     }
     return question;
   } catch (error) {
-    throw new Error( "Error finding question by ids: " + error.message);
+    throw new Error("Error finding question by ids: " + error.message);
   }
 };
 
@@ -353,6 +381,6 @@ export const getListQuestionQuiz = async (ids) => {
     });
     return questionIds;
   } catch (error) {
-    throw new Error( "Error finding question by ids: " + error.message);
+    throw new Error("Error finding question by ids: " + error.message);
   }
 };
