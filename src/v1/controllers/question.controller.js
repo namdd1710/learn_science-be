@@ -304,7 +304,7 @@ export const UserGetListQuestionByLessonId = async (req, res) => {
     const halfCount = Math.ceil(count / 2);
 
     let questions;
-    if (isRedo === false || !isRedo) {
+    if (isRedo.toLowerCase() === 'false' || !isRedo) {
       questions = await questionModel
         .find({
           lessons: { $elemMatch: { id: lessonId } },
@@ -313,7 +313,7 @@ export const UserGetListQuestionByLessonId = async (req, res) => {
         })
         .sort({ order: 1,_id:1 })
         .limit(halfCount);
-    } else if (isRedo) {
+    } else if (isRedo.toLowerCase() === 'true') {
       questions = await questionModel
         .find({
           lessons: { $elemMatch: { id: lessonId } },
