@@ -1,6 +1,7 @@
 import {
   createForeignKey,
   createRecordInfo,
+  lessonStatus,
   unitStatus,
   updateRecordInfo,
 } from "../constants/constant.js";
@@ -60,6 +61,7 @@ export const UserGetAnUnit = async (req, res) => {
     if (unit.lessons?.length > 0) {
       let lessons = await findLessonByIds(unit.lessons)
       lessons.forEach(element => {
+        if(element.status !== lessonStatus.LESSON_ACTIVE_STATUS) return
         let item = lessonItemInUnit()
         item.id = element._id
         item.title = element.title
@@ -91,17 +93,29 @@ export const UserGetGradeUnits = async (req, res) => {
         .json(errorResponse(_apiCode.ERR_DEFAULT, "Unit not found", null));
     }
 
-    unit.forEach(item => {
+    for (const item of unit) {
       let element = unitResponse();
       element._id = item._id;
       element.name = item.name;
       element.grade.id = item.grade.id;
       element.grade.name = item.grade.name;
-      element.lessons = item.lessons;
+      element.lessons = [];
+      
+      if (item.lessons?.length > 0) {
+        let lessons = await findLessonByIds(item.lessons);
+        for (const lesson of lessons) {
+          if (lesson.status !== lessonStatus.LESSON_ACTIVE_STATUS) continue;
+          let lessonItem = lessonItemInUnit();
+          lessonItem.id = lesson._id;
+          lessonItem.title = lesson.title;
+          element.lessons.push(lessonItem);
+        }
+      }
+    
       element.videos = item.videos;
-      element.quizId = item.quizId
-      response.push(element)
-    });
+      element.quizId = item.quizId;
+      response.push(element);
+    }
     res.status(_apiCode.SUCCESS).json(successResponse(response));
   } catch (error) {
     res
