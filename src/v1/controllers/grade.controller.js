@@ -10,10 +10,10 @@ import { getAllGradesResponse } from "../response/grade-controller_responses/get
 export const AddNewGrade = async (req, res) => {
   const {name} = req.body;
   try {
-    const existingGrade = await findGradeByName(name);
-    if (existingGrade) {
-      return res.status(_apiCode.ERR_DEFAULT).json(errorResponse(_apiCode.ERR_DEFAULT, "Grade already exists", null));
-    }
+    // const existingGrade = await findGradeByName(name);
+    // if (existingGrade) {
+    //   return res.status(_apiCode.ERR_DEFAULT).json(errorResponse(_apiCode.ERR_DEFAULT, "Grade already exists", null));
+    // }
     var newGradeObject = req.body
     var creatorId = getUserIdFromRequest(req);
     var creatorName = getUserNameFromRequest(req);

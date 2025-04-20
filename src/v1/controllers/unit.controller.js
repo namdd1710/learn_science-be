@@ -23,12 +23,12 @@ import { findLessonByIds } from "./lesson.controller.js";
 export const AddNewUnit = async (req, res) => {
   const { name, gradeId, videos } = req.body;
   try {
-    const existingUnit = await findUnitByName(name);
-    if (existingUnit) {
-      return res.json(
-        errorResponse(_apiCode.ERR_DEFAULT, "Unit already exists", null)
-      );
-    }
+    // const existingUnit = await findUnitByName(name);
+    // if (existingUnit) {
+    //   return res.json(
+    //     errorResponse(_apiCode.ERR_DEFAULT, "Unit already exists", null)
+    //   );
+    // }
     var newUnitObject = req.body;
     var creatorId = getUserIdFromRequest(req);
     var creatorName = getUserNameFromRequest(req);

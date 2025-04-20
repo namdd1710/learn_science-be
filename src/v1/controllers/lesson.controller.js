@@ -18,14 +18,14 @@ import { addLessonIntoUnit, findUnitById } from "./unit.controller.js";
 export const AddNewLesson = async (req, res) => {
   const { title, unitId, gradeId } = req.body;
   try {
-    const existingLesson = await findLessonByName(title);
-    if (existingLesson) {
-      return res
-        .status(_apiCode.ERR_DEFAULT)
-        .json(
-          errorResponse(_apiCode.ERR_DEFAULT, "Lesson already exists", null)
-        );
-    }
+    // const existingLesson = await findLessonByName(title);
+    // if (existingLesson) {
+    //   return res
+    //     .status(_apiCode.ERR_DEFAULT)
+    //     .json(
+    //       errorResponse(_apiCode.ERR_DEFAULT, "Lesson already exists", null)
+    //     );
+    // }
 
     const unit = await findUnitById(unitId);
     const grade = await findGradeById(gradeId);
